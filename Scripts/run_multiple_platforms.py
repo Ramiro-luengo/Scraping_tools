@@ -3,6 +3,7 @@ import argparse
 import json
 from threading import Thread
 import traceback
+import time
 
 def run_command(command):
     print(command)
@@ -94,8 +95,13 @@ if __name__ == '__main__':
         if len(file) > 1:
             pass
         file=file[0]
-        operacion = args.o
+        operation = args.o
+        if operation != 'scraping' or operation != 'testing':
+            raise Exception("Wrong operation: {operation}")
         cantidad_de_threads = args.c
+        if cantidad_de_threads > 15:
+            print("La cantidad de threads maxima es muy alta({cantidad_de_threads}), consumira mucha memoria y procesador")
+            time.sleep(5)
     except:
         print('Error de argumentos, use -h para ver los argumentos que lleva el programa')
     
@@ -116,7 +122,7 @@ if __name__ == '__main__':
                     if country.get('NeedVPN'):
                         need_vpn = country.get('NeedVPN')
                     
-                    command = 'py main.py "--c"'+ ' "{}" '.format(country_code.upper()) + '"--o"' + ' "{}" '.format(operacion) + class_name
+                    command = 'py main.py "--c"'+ ' "{}" '.format(country_code.upper()) + '"--o"' + ' "{}" '.format(operation) + class_name
                     
                     if not need_vpn:
                         commands.append(command)
