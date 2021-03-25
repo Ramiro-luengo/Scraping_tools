@@ -92,8 +92,10 @@ if __name__ == '__main__':
     try:
         args = parser.parse_args()
         file = args.file
+        if file.split(".")[1] != "json":
+            raise Exception("La estension del archivo debe ser .json")
         if len(file) > 1:
-            pass
+            raise Exception("Solo se puede tener un archivo de plataformas")
         file=file[0]
         operation = args.o
         if operation != 'scraping' or operation != 'testing':
@@ -101,10 +103,11 @@ if __name__ == '__main__':
         cantidad_de_threads = args.c
         if cantidad_de_threads > 15:
             print("La cantidad de threads maxima es muy alta({cantidad_de_threads}), consumira mucha memoria y procesador")
+            print("Tiene 5 segs para reconsiderarlo, sino el programa avanzara normalmente")
             time.sleep(5)
-    except:
-        print('Error de argumentos, use -h para ver los argumentos que lleva el programa')
-    
+    except Exception as e:
+        print('Error de argumentos, use -h para ver los argumentos que lleva el programa\n')
+        print(e)
     if file:
         with open(file,'r') as fjson:
             configurations = json.load(fjson)
