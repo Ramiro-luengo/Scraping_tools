@@ -4,34 +4,11 @@
             "ClassName": "Weyyak",
             "Countries": [
                 {
-                    "CountryCode": "am.weyyak"
+                    "CountryCode": "am.weyyak",
+                    "NeedVPN": false
                 },
                 {
                     "CountryCode": "bh.weyyak"
-                },
-                {
-                    "CountryCode": "ir.weyyak"
-                },
-                {
-                    "CountryCode": "ne.weyyak"
-                },
-                {
-                    "CountryCode": "ps.weyyak"
-                },
-                {
-                    "CountryCode": "sa.weyyak"
-                },
-                {
-                    "CountryCode": "sy.weyyak"
-                },
-                {
-                    "CountryCode": "td.weyyak"
-                },
-                {
-                    "CountryCode": "tn.weyyak"
-                },
-                {
-                    "CountryCode": "tr.weyyak"
                 }
             ]
         }
