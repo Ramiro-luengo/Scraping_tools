@@ -17,12 +17,12 @@ def run_command(command):
             f.write("\n")
             f.write("   Error:" + traceback.format_exc())
 
-def control_threads(thread_list,cantidad_de_threads):
+def control_threads(thread_list,max_thread_count):
     running_threads = []
     sleeping_threads = []
     
     for idx,thread in enumerate(thread_list):
-        if idx < cantidad_de_threads:
+        if idx < max_thread_count:
             running_threads.append(thread)
         else:
             sleeping_threads.append(thread)
@@ -34,7 +34,7 @@ def control_threads(thread_list,cantidad_de_threads):
         thread.join()
     
     if sleeping_threads:
-        control_threads(sleeping_threads,cantidad_de_threads)
+        control_threads(sleeping_threads,max_thread_count)
 
 def get_command(country_code,commandpairs):
     for command in commandpairs:
@@ -65,7 +65,7 @@ def analizeVPN(command_tuple):
     print(commandpairs)
     return commandpairs
     
-def run_commands(cantidad_de_threads, commands):
+def run_commands(max_thread_count, commands):
     threads = []
     for command in commands:
         try:
@@ -74,9 +74,15 @@ def run_commands(cantidad_de_threads, commands):
         except:
             print('Error de hilo en comando: ' + command)
     if threads:
-        control_threads(threads,cantidad_de_threads)
+        control_threads(threads,max_thread_count)
 
 if __name__ == '__main__':
+    """
+        This script is used to run multiple platform scripts from different regions and different
+        classes. It only works with the current system using all platform imports on "Main". 
+    """
+    print("Este programa requiere un archivo .json con la configuracion de cada plataforma a correr.\n")
+    print("     La operacion(--o) por defecto es scraping y la cantidad de threads maxima(--c) por default es 10.")
     parser =  argparse.ArgumentParser()
     parser.add_argument('file', help = 'Archivo de platformcodes',type=str, nargs="+")
     parser.add_argument('--o', help = 'Operacion: scraping o testing', type=str, default='scraping')
