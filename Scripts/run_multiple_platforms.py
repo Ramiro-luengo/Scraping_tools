@@ -83,11 +83,11 @@ if __name__ == '__main__':
         classes. It only works with the current system using all platform imports on "Main". 
     """
     print("Este programa requiere un archivo .json con la configuracion de cada plataforma a correr.\n")
-    print("     La operacion(--o) por defecto es scraping y la cantidad de threads maxima(--c) por default es 10.")
+    print("     La operacion(--o) por defecto es scraping y la cantidad de threads maxima(--c) por default es 5.")
     parser =  argparse.ArgumentParser()
     parser.add_argument('file', help = 'Archivo de platformcodes',type=str, nargs="+")
     parser.add_argument('--o', help = 'Operacion: scraping o testing', type=str, default='scraping')
-    parser.add_argument('--c', help = 'Cantidad de threads maxima',type=int,default=10)
+    parser.add_argument('--c', help = 'Cantidad de threads maxima',type=int,default=5)
 
     try:
         args = parser.parse_args()
