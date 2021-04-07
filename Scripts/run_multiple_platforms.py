@@ -1,22 +1,31 @@
-import os
 import argparse
 import json
+import subprocess
 from threading import Thread
-import traceback
 import time
+import re
 
 def run_command(command):
     print(command)
-    try:
-        os.system(command)
-    except Exception as e:
+    # cmd = subprocess.Popen(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    cmd = subprocess.Popen(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    output, error = cmd.communicate()
+    if(error):
         print('No pudo terminar el comando: ', command)
-        print(e)
-
         with open("errors.log",'a') as f:
-            f.write("Comando: ",command)
+            f.write("Comando: " + command)
             f.write("\n")
-            f.write("   Error:" + traceback.format_exc())
+            f.write("   Error:" + error.decode("utf-8"))
+    if(output):
+        regex = re.findall(r'[A-Z]+\w+', command)
+        var_1 = regex[0]
+        var_2 = regex[1]
+        if len(var_1) > 2:
+            fileName = var_2 + '.' + var_1
+        else:
+            fileName = var_1.lower() + '.' + var_2.lower() 
+        with open(fileName +".log",'w') as f:
+            f.write(output.decode("utf-8"))
 
 def control_threads(thread_list,max_thread_count):
     running_threads = []
@@ -145,4 +154,4 @@ if __name__ == '__main__':
                     input("Apretar Enter luego de conectar el VPN...")
                     run_commands(cantidad_de_threads,command['Commands'])
 
-    print("Todos los codigos fueron ejecutados correctamente.")
+    print("Todos los codigos fueron ejecutados")
