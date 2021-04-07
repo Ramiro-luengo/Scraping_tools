@@ -4,12 +4,9 @@ import subprocess
 from threading import Thread
 import time
 import re
-import functools
-import operator
 
 def run_command(command):
     print(command)
-    # cmd = subprocess.Popen(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     cmd = subprocess.Popen(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     output, error = cmd.communicate()
     if(error):
@@ -49,6 +46,7 @@ def control_threads(thread_list,max_thread_count):
     
     for thread in running_threads:
         thread.join()
+        print("Hilo: " + str(running_threads.index(thread)) + " finalizo.")
     
     if sleeping_threads:
         control_threads(sleeping_threads,max_thread_count)
@@ -79,7 +77,7 @@ def analizeVPN(command_tuple):
                     if c['CountryCode'] == country_code:
                         c['Commands'].append(command)
 
-    print(commandpairs)
+    # print(commandpairs)
     return commandpairs
     
 def run_commands(max_thread_count, commands):
