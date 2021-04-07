@@ -4,6 +4,8 @@ import subprocess
 from threading import Thread
 import time
 import re
+import functools
+import operator
 
 def run_command(command):
     print(command)
@@ -17,6 +19,7 @@ def run_command(command):
             f.write("\n")
             f.write("   Error:" + error.decode("utf-8"))
     if(output):
+        output = output.decode("utf-8")
         regex = re.findall(r'[A-Z]+\w+', command)
         var_1 = regex[0]
         var_2 = regex[1]
@@ -25,7 +28,11 @@ def run_command(command):
         else:
             fileName = var_1.lower() + '.' + var_2.lower() 
         with open(fileName +".log",'w') as f:
-            f.write(output.decode("utf-8"))
+            split_lines = output.splitlines()
+            split_lines2 = split_lines[-20:-1] # Ultimas 20 lineas del output en una lista
+            for line in split_lines2:
+                f.write(line)
+                f.write('\n')
 
 def control_threads(thread_list,max_thread_count):
     running_threads = []
