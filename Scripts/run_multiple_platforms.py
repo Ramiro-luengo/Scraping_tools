@@ -91,12 +91,12 @@ if __name__ == '__main__':
 
     try:
         args = parser.parse_args()
-        file = args.file
+        files = args.file
+        file=files[0]
         if file.split(".")[1] != "json":
             raise Exception("La estension del archivo debe ser .json")
-        if len(file) > 1:
+        if len(files) > 1:
             raise Exception("Solo se puede tener un archivo de plataformas")
-        file=file[0]
         operation = args.o
         if operation != 'scraping' or operation != 'testing':
             raise Exception("Wrong operation: {operation}")
@@ -108,6 +108,7 @@ if __name__ == '__main__':
     except Exception as e:
         print('Error de argumentos, use -h para ver los argumentos que lleva el programa\n')
         print(e)
+        exit()
     if file:
         with open(file,'r') as fjson:
             configurations = json.load(fjson)
