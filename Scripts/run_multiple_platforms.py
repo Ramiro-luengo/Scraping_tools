@@ -13,7 +13,7 @@ def run_command(command):
         print('No pudo terminar el comando: ', command)
         print(e)
 
-        with open("errors.log",'w') as f:
+        with open("errors.log",'a') as f:
             f.write("Comando: ",command)
             f.write("\n")
             f.write("   Error:" + traceback.format_exc())
@@ -82,8 +82,9 @@ if __name__ == '__main__':
         This script is used to run multiple platform scripts from different regions and different
         classes. It only works with the current system using all platform imports on "Main". 
     """
-    print("Este programa requiere un archivo .json con la configuracion de cada plataforma a correr.\n")
-    print("     La operacion(--o) por defecto es scraping y la cantidad de threads maxima(--c) por default es 5.")
+    print(" Este programa requiere un archivo .json con la configuracion de cada plataforma a correr.\n")
+    print("     La operacion(--o) por defecto es scraping")
+    print("     La cantidad de threads maxima(--c) por default es 5.")
     parser =  argparse.ArgumentParser()
     parser.add_argument('file', help = 'Archivo de platformcodes',type=str, nargs="+")
     parser.add_argument('--o', help = 'Operacion: scraping o testing', type=str, default='scraping')
@@ -98,7 +99,7 @@ if __name__ == '__main__':
         if len(files) > 1:
             raise Exception("Solo se puede tener un archivo de plataformas")
         operation = args.o
-        if operation != 'scraping' or operation != 'testing':
+        if operation != 'scraping' and operation != 'testing':
             raise Exception("Wrong operation: {operation}")
         cantidad_de_threads = args.c
         if cantidad_de_threads > 15:
