@@ -20,11 +20,20 @@ def run_command(command):
         regex = re.findall(r'[A-Z]+\w+', command)
         var_1 = regex[0]
         var_2 = regex[1]
+        # Se usa este if para poner el saber como viene el platformCode 
+        # y ponerlo de nombre del archivo. Cambiar a futuro y poner todos
+        # en el mismo archivo con el nombre de la clase. 
+        # if len(var_1) > 2:
+        #     # var_1 seria el nombre de la clase
+        #     fileName = var_2.lower() + '.' + var_1.lower()
+        # else:
+        #     # var_2 seria el nombre de la clase
+        #     fileName = var_1.lower() + '.' + var_2.lower()
         if len(var_1) > 2:
-            fileName = var_2 + '.' + var_1
+            fileName = var_1.lower()
         else:
-            fileName = var_1.lower() + '.' + var_2.lower() 
-        with open(fileName +".log",'w') as f:
+            fileName = var_2.lower()
+        with open(fileName +".log",'a') as f:
             split_lines = output.splitlines()
             split_lines2 = split_lines[-20:-1] # Ultimas 20 lineas del output en una lista
             for line in split_lines2:
